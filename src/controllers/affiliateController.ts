@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import uuid from 'uuidv4';
 import * as mongoose from 'mongoose';
 import {
   insufficientParameters,
@@ -14,13 +15,10 @@ export class AffiliateController {
 
   public createAffiliateUrl(req: Request, res: Response) {
     // this check whether all the filds were send through the erquest or not
-    if (req.body.country && req.body.product && req.body.category) {
+    if (req.body.country && req.body.product_id && req.body.category_id) {
       const affiliate_params: IAffiliate = {
-        product: req.body.product.name,
-        category: req.body.category.name,
-        country: req.body.country,
-        userID: '60991c9d57968dbb6df79a84',
-        url: '',
+        ...req.payload,
+        url: `http://localhost:3000?product=${req.payload.product}&token=${req.payload.userID}`,
         modification_notes: [
           {
             modified_on: new Date(Date.now()),

@@ -9,7 +9,7 @@ import environment from '../environment';
 
 class App {
   public app: express.Application;
-  public mongoUrl: string = 'mongodb://localhost/' + environment.getDBName();
+  public mongoUrl: string = 'mongodb://mongo:27017/' + environment.getDBName();
 
   private test_routes: TestRoutes = new TestRoutes();
   private affiliate_routes: AffiliateRoutes = new AffiliateRoutes();
@@ -25,11 +25,19 @@ class App {
     this.app.use(express.json());
     //support application/x-www-form-urlencoded post data
     this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(helmet());
+    this.app.use(helmet.dnsPrefetchControl());
+    this.app.use(helmet.expectCt());
+    this.app.use(helmet.frameguard());
+    this.app.use(helmet.hidePoweredBy());
+    this.app.use(helmet.hsts());
+    this.app.use(helmet.ieNoOpen());
+    this.app.use(helmet.noSniff());
+    this.app.use(helmet.permittedCrossDomainPolicies());
+    this.app.use(helmet.referrerPolicy());
+    this.app.use(helmet.xssFilter());
   }
 
   private mongoSetup(): void {
-    console.log(this.mongoUrl);
     connect(this.mongoUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
