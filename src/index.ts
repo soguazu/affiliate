@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
+import dotEnvExtended from 'dotenv-extended';
 
 import app from './config/app';
 import env from './environment';
 
 const PORT = env.getPort();
+dotEnvExtended.load();
 
 if (!PORT) console.log('PORT not set in env');
 

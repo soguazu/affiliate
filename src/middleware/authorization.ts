@@ -3,11 +3,12 @@ import { Request, Response, NextFunction } from 'express';
 
 const auth = (request: Request, response: Response, next: NextFunction) => {
   const { authorization } = request.headers;
+  const key: string = process.env.AFFILIATE_APP_SECRET;
 
   if (authorization && authorization.split(' ')[0] === 'Bearer') {
     try {
       const token = authorization.split(' ')[1];
-      const decrypted = jwt.verify(token, 'qwertyuiopasdfghjklzxcvbnm123456');
+      const decrypted = jwt.verify(token, key);
 
       request.payload = {
         product: 'T-shirt',

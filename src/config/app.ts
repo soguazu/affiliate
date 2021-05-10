@@ -44,8 +44,6 @@ class App {
       useCreateIndex: true,
       useFindAndModify: false,
     });
-    // .then(() => console.log('Connected successfully'))
-    // .catch((error) => console.log('An error ocurred: ', error));
   }
 }
 export default new App().app;

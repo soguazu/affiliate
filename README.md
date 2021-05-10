@@ -57,7 +57,7 @@ link for a specific product.
 3. Run the program normally
 
    ```sh
-   docker-compose build --up -d
+   docker-compose up --build
    ```
 
 <!-- USAGE EXAMPLES -->
